@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ru"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="theme-color" content="#07080f">
+<title>RETRO R36</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+@property --c{syntax:'<color>';inherits:true;initial-value:#6c5ce7}
+:root{--px:'Press Start 2P',ui-monospace,monospace}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none;touch-action:manipulation}
+html,body{margin:0;height:100%;background:#07080f;overflow:hidden;font-family:system-ui,sans-serif;color:#fff}
+#ui{--c:#6c5ce7;transition:--c .5s;position:fixed;inset:0;display:flex;flex-direction:column;overflow:hidden;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);background:linear-gradient(120deg,color-mix(in srgb,var(--c) 45%,#07080f),#07080f 78%)}
+#ui::before{content:'';position:absolute;inset:-50%;background:repeating-linear-gradient(60deg,transparent 0 40px,color-mix(in srgb,var(--c) 13%,transparent) 40px 80px);animation:mv 18s linear infinite}
+@keyframes mv{to{transform:translateX(160px)}}
+#wm{position:absolute;right:2vw;bottom:2vh;font:400 34vh/1 var(--px);color:#fff;opacity:.06;pointer-events:none;white-space:nowrap}
+#tb{position:relative;z-index:5;height:46px;flex:none;display:flex;align-items:center;gap:10px;padding:0 14px;font:400 9px var(--px);text-shadow:0 0 10px var(--c);background:linear-gradient(#000a,transparent)}
+#tb .sp{flex:1}
+.bt{border:0;border-radius:10px;padding:9px 12px;background:#ffffff1f;color:#fff;font:400 9px var(--px);backdrop-filter:blur(6px)}
+.bt:active{background:#fff4}.bt.pr{background:var(--c);color:#000a}
+#cont{max-width:34vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#main{position:relative;flex:1;min-height:0}
+.v{position:absolute;inset:0;transition:transform .35s cubic-bezier(.2,.9,.3,1),opacity .3s}
+.v.h{opacity:0;pointer-events:none;transform:scale(.9)}#sv.h,#st.h{transform:translateX(8%)}
+#car{position:absolute;left:0;right:0;top:2%;height:64%}
+.it{position:absolute;left:50%;top:50%;width:min(31vh,20vw);transition:transform .4s cubic-bezier(.2,.9,.3,1.2),opacity .3s;filter:drop-shadow(0 14px 18px #000c)}
+.it svg{width:100%;display:block}.it.on{animation:fb 2.4s ease-in-out infinite}
+@keyframes fb{50%{margin-top:-7px}}
+#nm{position:absolute;left:0;right:0;bottom:19%;text-align:center;font:400 clamp(13px,4.4vh,22px) var(--px);text-shadow:0 0 16px var(--c),0 0 4px var(--c)}
+#in{position:absolute;left:0;right:0;bottom:8%;text-align:center;font:400 clamp(7px,2.1vh,10px) var(--px);color:#cfd3ff;line-height:2}
+.ar{position:absolute;top:34%;width:46px;height:60px;border:0;border-radius:12px;background:#ffffff18;color:#fff;font-size:20px;z-index:4}.ar.l{left:10px}.ar.r{right:10px}
+#sv,#st{display:flex;gap:2vw;padding:6px 18px 12px}
+#sl{flex:0 0 33%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center}
+#sl svg{height:34vh;max-height:200px;filter:drop-shadow(0 12px 16px #000c)}
+#sl h2{margin:0;font:400 clamp(11px,3.6vh,16px) var(--px);text-shadow:0 0 12px var(--c)}#sl small{font:400 8px/1.8 var(--px);color:#cfd3ff}
+#sl .bt{width:100%}
+#rows{flex:1;overflow:auto;scrollbar-width:none;padding:2px 4px}#rows::-webkit-scrollbar{display:none}
+.r{display:flex;align-items:center;gap:12px;height:62px;margin-bottom:8px;padding:7px 10px;border-radius:12px;background:#0b0d1ccc;border:2px solid #ffffff14;font:400 9px var(--px);transition:transform .12s}
+.r:active{border-color:var(--c);box-shadow:0 0 16px var(--c);transform:translateX(5px)}
+.th{width:46px;height:46px;flex:none;border-radius:8px;object-fit:cover;background:linear-gradient(135deg,var(--c),#000);display:flex;align-items:center;justify-content:center;font:400 14px var(--px)}
+.t{flex:1;min-width:0;line-height:1.7}.t b{display:block;font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.t i{font-style:normal;font-size:7px;color:#9aa0d0}
+.sm{border:0;background:none;color:#fff;font-size:18px;padding:8px 10px;opacity:.75}
+.em{text-align:center;font:400 9px/2.2 var(--px);padding:8vh 10px;color:#cfd3ff}
+#st{flex-direction:column;overflow:auto;max-width:760px;margin:0 auto;width:100%}
+#st h3{margin:4px 0 10px;font:400 11px var(--px);text-shadow:0 0 10px var(--c)}
+.bi small{display:block;font:400 7px/1.8 var(--px);color:#9aa0d0}.bi .t b{font-size:9px}
+.ok{color:#5df29a!important}
+#ft{position:relative;z-index:5;height:30px;flex:none;display:flex;justify-content:center;align-items:center;gap:22px;font:400 7px var(--px);color:#cfd3ff;background:linear-gradient(transparent,#000b)}
+#ft b{display:inline-block;min-width:18px;padding:4px 5px;margin-right:6px;border-radius:50%;background:#ffffff30;font-weight:400;text-align:center}
+#rot{position:fixed;inset:0;z-index:99;background:#07080f;display:none;flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center;font:400 10px/2 var(--px);padding:20px}
+#rot span{font-size:60px;animation:rt 2s ease-in-out infinite}@keyframes rt{50%{transform:rotate(-90deg)}}
+@media(orientation:portrait){#rot{display:flex}}
+</style></head><body>
+<div id="ui">
+ <div id="wm"></div>
+ <div id="tb"><button class="bt" id="bk" style="display:none">‹ НАЗАД</button><b id="ttl">★ RETRO R36</b><span class="sp"></span><button class="bt pr" id="cont" style="display:none"></button><span id="clk"></span><button class="bt" id="fs">⛶</button></div>
+ <div id="main">
+  <div class="v" id="home"><button class="ar l" id="pl">◀</button><button class="ar r" id="pr">▶</button><div id="car"></div><div id="nm"></div><div id="in"></div></div>
+  <div class="v h" id="sv"><div id="sl"></div><div id="rows"></div></div>
+  <div class="v h" id="st"></div>
+ </div>
+ <div id="ft"></div>
+</div>
+<div id="rot"><span>📱</span>ПОВЕРНИ ТЕЛЕФОН<br>ГОРИЗОНТАЛЬНО</div>
+<input type="file" id="f" multiple hidden><input type="file" id="fb" hidden><input type="file" id="fc" accept="image/*" hidden>
+<script>
+const $=id=>document.getElementById(id);
+const SYS=[
+{id:'nes',n:'NES',s:'NES',d:'Nintendo 8-bit',c:'#ff5e57',ext:'nes,zip,7z',t:'c'},
+{id:'snes',n:'SUPER NES',s:'SNES',d:'Super Nintendo',c:'#a29bfe',ext:'sfc,smc,zip,7z',t:'c'},
+{id:'gb',n:'GAME BOY',s:'GB',d:'GB / GBC',c:'#2ecc71',ext:'gb,gbc,zip,7z',t:'c'},
+{id:'gba',n:'GBA',s:'GBA',d:'Game Boy Advance',c:'#c56cf0',ext:'gba,zip,7z',t:'c'},
+{id:'nds',n:'NINTENDO DS',s:'NDS',d:'Nintendo DS',c:'#3498db',ext:'nds,zip,7z',t:'c'},
+{id:'n64',n:'NINTENDO 64',s:'N64',d:'Nintendo 64',c:'#ff9f43',ext:'z64,n64,v64,zip,7z',t:'c'},
+{id:'psx',n:'PLAYSTATION',s:'PS1',d:'Нужен BIOS',c:'#74b9ff',ext:'bin,cue,iso,chd,pbp,img,zip,7z',t:'d',bios:1},
+{id:'psp',n:'PSP',s:'PSP',d:'PlayStation Portable',c:'#00cec9',ext:'iso,cso,pbp,zip',t:'d'},
+{id:'md',n:'MEGA DRIVE',s:'MD',d:'Sega Genesis',c:'#4b7bec',ext:'md,gen,smd,bin,zip,7z',t:'c'},
+{id:'sms',n:'MASTER SYS',s:'SMS',d:'Sega Master System',c:'#fd79a8',ext:'sms,zip,7z',t:'c'},
+{id:'gg',n:'GAME GEAR',s:'GG',d:'Sega Game Gear',c:'#778beb',ext:'gg,zip,7z',t:'c'},
+{id:'a26',n:'ATARI 2600',s:'2600',d:'Atari',c:'#f6b93b',ext:'a26,bin,zip,7z',t:'c'},
+{id:'pce',n:'PC ENGINE',s:'PCE',d:'TurboGrafx-16',c:'#fab1a0',ext:'pce,zip,7z',t:'c'},
+{id:'arc',n:'ARCADE',s:'ARC',d:'MAME / FBNeo',c:'#55efc4',ext:'zip,7z',t:'c'},
+{id:'set',n:'BIOS / НАСТРОЙКИ',s:'⚙',d:'Файлы BIOS',c:'#b2bec3',t:'g'}];
+const BIOS=[['psx','PlayStation','scph1001.bin','Обязателен для PS1'],['gba','Game Boy Advance','gba_bios.bin','Необязателен, улучшает совместимость']];
+function icon(s){const c=s.c,u='g'+s.id,F=`font-family="Press Start 2P,monospace"`,G=`<defs><linearGradient id="${u}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".35"/></linearGradient></defs>`;
+if(s.t=='g')return `<svg viewBox="0 0 120 120">${G}<rect x="10" y="22" width="100" height="76" rx="12" fill="${c}"/><rect x="10" y="22" width="100" height="76" rx="12" fill="url(#${u})"/><rect x="24" y="36" width="72" height="30" rx="4" fill="#0b0c14"/><text x="60" y="58" text-anchor="middle" font-size="14" fill="#5df29a" ${F}>BIOS</text><circle cx="34" cy="82" r="5" fill="#0006"/><circle cx="54" cy="82" r="5" fill="#0006"/></svg>`;
+return s.t=='d'?`<svg viewBox="0 0 120 120">${G}<circle cx="60" cy="60" r="56" fill="${c}"/><circle cx="60" cy="60" r="56" fill="url(#${u})"/><circle cx="60" cy="60" r="38" fill="none" stroke="#0004" stroke-width="2"/><circle cx="60" cy="60" r="20" fill="#0b0c14"/><circle cx="60" cy="60" r="7" fill="${c}"/><text x="60" y="100" text-anchor="middle" font-size="11" fill="#000" fill-opacity=".7" ${F}>${s.s}</text></svg>`
+:`<svg viewBox="0 0 120 140">${G}<path d="M12 8h96v92l-14 32H26L12 100z" fill="${c}"/><path d="M12 8h96v92l-14 32H26L12 100z" fill="url(#${u})"/><rect x="24" y="22" width="72" height="58" rx="6" fill="#0b0c14" fill-opacity=".88"/><text x="60" y="58" text-anchor="middle" font-size="15" fill="#fff" ${F}>${s.s}</text><rect x="22" y="88" width="76" height="3" fill="#0004"/><rect x="34" y="106" width="52" height="20" fill="#0009"/>${[0,1,2,3,4,5].map(i=>`<rect x="${38+i*8}" y="110" width="3" height="12" fill="#d4af37"/>`).join('')}</svg>`}
+let ac;function beep(f,t=.06){try{ac=ac||new AudioContext();const o=ac.createOscillator(),g=ac.createGain(),n=ac.currentTime;o.type='square';o.frequency.setValueAtTime(f,n);o.frequency.exponentialRampToValueAtTime(f*1.5,n+t);g.gain.setValueAtTime(.04,n);g.gain.exponentialRampToValueAtTime(.001,n+t);o.connect(g);g.connect(ac.destination);o.start();o.stop(n+t)}catch(e){}}
+let db,cur=0,view='home',games=[],gi=0,counts={};
+const req=indexedDB.open('retro36',2);
+req.onupgradeneeded=e=>{const d=e.target.result;if(!d.objectStoreNames.contains('games'))d.createObjectStore('games',{keyPath:'id',autoIncrement:true}).createIndex('sys','sys');if(!d.objectStoreNames.contains('bios'))d.createObjectStore('bios');if(!d.objectStoreNames.contains('covers'))d.createObjectStore('covers')};
+const tx=(s,m='readonly')=>db.transaction(s,m).objectStore(s);
+const P=r=>new Promise(res=>{r.onsuccess=()=>res(r.result)});
+const loadC=async()=>{for(const s of SYS)if(s.t!='g')counts[s.id]=await P(tx('games').index('sys').count(s.id))};
+function ftr(h){$('ft').innerHTML=h.map(x=>`<span><b>${x[0]}</b>${x[1]}</span>`).join('')}
+function setView(v){view=v;$('home').classList.toggle('h',v!='home');$('sv').classList.toggle('h',v!='sv');$('st').classList.toggle('h',v!='st');
+ $('bk').style.display=v=='home'?'none':'block';
+ if(v=='home'){$('ttl').textContent='★ RETRO R36';ftr([['◀▶','ВЫБОР'],['A','ОТКРЫТЬ']]);upd()}
+ else if(v=='sv'){$('ttl').textContent=SYS[cur].n;ftr([['B','НАЗАД'],['TAP','ЗАПУСК'],['🖼','ОБЛОЖКА']])}
+ else{$('ttl').textContent='BIOS';ftr([['B','НАЗАД']])}}
+function upd(){const s=SYS[cur];$('ui').style.setProperty('--c',s.c);$('nm').textContent=s.n;$('in').innerHTML=s.d+(s.t!='g'?'<br>ИГР: '+(counts[s.id]||0):'');$('wm').textContent=s.s;
+ [...$('car').children].forEach((e,i)=>{const d=i-cur,a=Math.abs(d);e.style.transform=`translate(-50%,-50%) translateX(${d*92}%) scale(${a?.6:1})`;e.style.opacity=a>3?0:a==3?.15:a==2?.35:a?.55:1;e.style.zIndex=9-a;e.style.pointerEvents=a>3?'none':'auto';e.classList.toggle('on',!a)})}
+function build(){$('car').innerHTML='';SYS.forEach((s,i)=>{const e=document.createElement('div');e.className='it';e.innerHTML=icon(s);e.onclick=()=>{if(i==cur)open();else{cur=i;beep(520);upd()}};$('car').appendChild(e)});upd()}
+function move(d){const n=cur+d;if(n<0||n>=SYS.length)return;cur=n;beep(d>0?560:500);upd()}
+async function open(){beep(760,.12);const s=SYS[cur];if(s.t=='g'){await bios();setView('st');return}
+ $('f').accept=s.ext.split(',').map(x=>'.'+x).join(',');setView('sv');await paint()}
+async function paint(){const s=SYS[cur];games=(await P(tx('games').index('sys').getAll(s.id))).sort((a,b)=>a.name.localeCompare(b.name));
+ $('sl').innerHTML=`${icon(s)}<h2>${s.n}</h2><small>ИГР: ${games.length}</small><button class="bt pr" id="ad">＋ ДОБАВИТЬ ИГРЫ</button>${s.bios?'<button class="bt" id="bi">BIOS</button>':''}`;
+ $('ad').onclick=()=>$('f').click();if(s.bios)$('bi').onclick=()=>{cur=SYS.length-1;open()};
+ const R=$('rows');R.innerHTML='';
+ if(!games.length){R.innerHTML=`<div class="em">ПУСТО :(<br>Нажми «ДОБАВИТЬ ИГРЫ» и выбери свои файлы.${s.bios?'<br><br>Не забудь BIOS для PS1.':''}</div>`;return}
+ for(const g of games){const cv=await P(tx('covers').get(g.id)),nm=g.name.replace(/\.[^.]+$/,''),e=document.createElement('div');e.className='r';
+  e.innerHTML=(cv?`<img class="th" src="${URL.createObjectURL(cv)}">`:`<div class="th">${(nm[0]||'?').toUpperCase()}</div>`)+`<div class="t"><b></b><i>${(g.size/1048576).toFixed(1)} MB</i></div><button class="sm c">🖼</button><button class="sm d">🗑</button>`;
+  e.querySelector('b').textContent=nm;
+  e.onclick=()=>{beep(880,.2);try{localStorage.setItem('last',JSON.stringify({id:g.id,name:nm}))}catch(x){}setTimeout(()=>location.href='play.html?id='+g.id,180)};
+  e.querySelector('.c').onclick=ev=>{ev.stopPropagation();gi=g.id;$('fc').click()};
+  e.querySelector('.d').onclick=async ev=>{ev.stopPropagation();if(confirm('Удалить '+nm+'?')){await P(tx('games','readwrite').delete(g.id));await P(tx('covers','readwrite').delete(g.id));await loadC();paint()}};
+  R.appendChild(e)}}
+let bt=null;
+async function bios(){const el=$('st');el.innerHTML='<h3>BIOS-ФАЙЛЫ</h3>';
+ for(const [id,n,ex,note] of BIOS){const f=await P(tx('bios').get(id)),r=document.createElement('div');r.className='r bi';
+  r.innerHTML=`<div class="th" style="--c:${SYS.find(s=>s.id==id).c}">${f?'✓':'!'}</div><div class="t"><b>${n}</b><small class="${f?'ok':''}">${f?(f.name||'загружен'):'не загружен · '+ex}</small><small>${note}</small></div><button class="bt pr">${f?'ЗАМЕНИТЬ':'ЗАГРУЗИТЬ'}</button>${f?'<button class="sm d">🗑</button>':''}`;
+  r.querySelector('.bt').onclick=()=>{bt=id;$('fb').click()};
+  const d=r.querySelector('.d');if(d)d.onclick=async()=>{await P(tx('bios','readwrite').delete(id));bios()};el.appendChild(r)}
+ const h=document.createElement('div');h.className='em';h.innerHTML='Файлы BIOS и игры хранятся только в твоём браузере<br>и никуда не отправляются.';el.appendChild(h)}
+$('bk').onclick=async()=>{beep(300,.1);if(view=='st'&&SYS[cur].t=='g'&&history.state=='fromsys'){}await loadC();setView('home')};
+$('f').onchange=async e=>{const s=SYS[cur];for(const f of e.target.files)await P(tx('games','readwrite').add({sys:s.id,name:f.name,blob:f,size:f.size}));e.target.value='';beep(900,.15);await loadC();paint()};
+$('fc').onchange=async e=>{const f=e.target.files[0];if(f)await P(tx('covers','readwrite').put(f,gi));e.target.value='';paint()};
+$('fb').onchange=async e=>{const f=e.target.files[0];if(f&&bt){await P(tx('bios','readwrite').put(f,bt));beep(900,.15)}e.target.value='';bios()};
+$('pl').onclick=()=>move(-1);$('pr').onclick=()=>move(1);
+$('fs').onclick=()=>{const d=document.documentElement;(d.requestFullscreen?d.requestFullscreen():Promise.reject()).then(()=>screen.orientation?.lock?.('landscape')).catch(()=>{});};
+let sx,sy;$('home').addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true});
+$('home').addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>40&&Math.abs(dx)>Math.abs(e.changedTouches[0].clientY-sy))move(dx<0?1:-1)});
+addEventListener('keydown',e=>{if(view=='home'){if(e.key=='ArrowRight')move(1);if(e.key=='ArrowLeft')move(-1);if(e.key=='Enter')open()}else if(e.key=='Escape'||e.key=='Backspace')$('bk').click()});
+function clock(){$('clk').textContent=new Date().toLocaleTimeString('ru',{hour:'2-digit',minute:'2-digit'})}setInterval(clock,15000);clock();
+req.onsuccess=async()=>{db=req.result;await loadC();build();setView('home');
+ try{const l=JSON.parse(localStorage.getItem('last'));if(l){const c=$('cont');c.style.display='block';c.textContent='▶ '+l.name;c.onclick=()=>location.href='play.html?id='+l.id}}catch(e){}
+ const h=location.hash.slice(1),i=SYS.findIndex(s=>s.id==h);if(i>=0){cur=i;upd();open()}};
+</script></body></html>

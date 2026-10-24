@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ru"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<title>Игра</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none;touch-action:none}
+html,body{margin:0;height:100%;background:#000;overflow:hidden;font-family:system-ui,sans-serif;color:#fff}
+#dev{--k:1;--ar:4/3;position:relative;height:100dvh;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto 1fr auto;grid-template-areas:"tp tp" "bz bz" "pl pr";padding:env(safe-area-inset-top) 6px env(safe-area-inset-bottom);background:var(--body);box-shadow:inset 0 0 60px #0006}
+#tp{grid-area:tp;display:flex;justify-content:space-between;align-items:center;padding:8px 6px;font:700 10px/1 monospace;letter-spacing:2px}
+#bk{border:0;border-radius:14px;padding:8px 12px;font:600 13px system-ui;background:#0006;color:#fff}
+#bz{grid-area:bz;min-height:0;display:flex;align-items:center;justify-content:center;padding:12px;margin:0 4px;border-radius:18px;background:var(--bz);box-shadow:inset 0 3px 10px #000a,0 1px 0 #fff4,0 6px 14px #0006}
+#scr{position:relative;width:100%;aspect-ratio:var(--ar);max-height:100%;background:#000;border-radius:6px;overflow:hidden;box-shadow:0 0 0 3px #000,0 0 22px #0009;filter:var(--sf,none)}
+#game{width:100%;height:100%}
+.ejs_virtualGamepad_parent,.ejs_virtualGamepad_open{display:none!important}
+#pl,#pr{display:flex;flex-direction:column;align-items:center;gap:calc(14px*var(--k));padding:12px 0 58px}
+#pl{grid-area:pl}#pr{grid-area:pr}
+.sr{display:flex;gap:10px}
+.sh{width:calc(80px*var(--k));height:26px;border:0;border-radius:11px 11px 5px 5px;font:700 11px system-ui;color:#0008;background:linear-gradient(color-mix(in srgb,var(--pc) 60%,#fff),var(--pc));box-shadow:0 4px 0 color-mix(in srgb,var(--pc) 40%,#000),0 7px 8px #0006,inset 0 2px 2px #fff7}
+.sh.on,.pil.on{transform:translateY(3px);filter:brightness(.85);box-shadow:0 1px 0 #0008}
+#mid{position:absolute;left:50%;bottom:calc(14px + env(safe-area-inset-bottom));transform:translateX(-50%);display:flex;gap:16px}
+.pil{border:0;padding:7px 12px;border-radius:12px;font:700 8px system-ui;letter-spacing:1px;color:#000a;transform:rotate(-14deg);background:linear-gradient(color-mix(in srgb,var(--pc) 60%,#fff),var(--pc));box-shadow:0 3px 0 color-mix(in srgb,var(--pc) 40%,#000),0 5px 6px #0007,inset 0 1px 1px #fff8}
+.fg{display:grid}
+.fb{width:calc(var(--cs)*.88);height:calc(var(--cs)*.88);place-self:center;border:0;border-radius:50%;color:rgba(0,0,0,.5);font:700 calc(var(--cs)*.34)/1 system-ui;text-shadow:0 1px 0 #fff4;background:radial-gradient(circle at 34% 26%,color-mix(in srgb,var(--bc) 50%,#fff),var(--bc) 50%,color-mix(in srgb,var(--bc) 62%,#000));box-shadow:0 5px 0 color-mix(in srgb,var(--bc) 42%,#000),0 9px 10px #000a,inset 0 -3px 5px #0004,inset 0 2px 3px #fff8;transition:transform .04s}
+.fb.g{color:var(--gc);font-size:calc(var(--cs)*.5);text-shadow:0 0 6px var(--gc)}
+.fb.on{transform:translateY(4px);box-shadow:0 1px 0 color-mix(in srgb,var(--bc) 42%,#000),0 2px 4px #000a,inset 0 3px 6px #0006}
+.dp{position:relative;width:calc(132px*var(--k));height:calc(132px*var(--k));transition:transform .06s;touch-action:none}
+.dp .h,.dp .v{position:absolute;background:linear-gradient(var(--dc),color-mix(in srgb,var(--dc) 60%,#000));border-radius:9px;box-shadow:0 5px 0 color-mix(in srgb,var(--dc) 40%,#000),0 9px 10px #000a,inset 0 2px 2px #fff5}
+.dp .h{left:0;right:0;top:33%;height:34%}.dp .v{top:0;bottom:0;left:33%;width:34%}
+.dp .c{position:absolute;left:38%;top:38%;width:24%;height:24%;border-radius:50%;background:radial-gradient(color-mix(in srgb,var(--dc) 70%,#000),var(--dc));box-shadow:inset 0 2px 4px #0008;z-index:2}
+.dp .a{position:absolute;z-index:2;font-size:calc(11px*var(--k));opacity:.45;color:#fff}
+.stk{border-radius:50%;background:radial-gradient(circle,#000 30%,#2a2a32 32%,#111 60%);box-shadow:0 0 0 4px #222,0 8px 14px #000a,inset 0 0 14px #000}
+.stk .bl{position:absolute;left:50%;top:50%;width:46%;height:46%;margin:-23%;border-radius:50%;background:radial-gradient(circle at 34% 28%,#ff8a8a,#d02a2a 50%,#6a0f0f);box-shadow:0 8px 8px #000a,inset 0 -3px 5px #0006;transition:transform .05s}
+.nub{width:calc(52px*var(--k));height:calc(52px*var(--k));border-radius:50%;background:radial-gradient(circle at 35% 30%,#666,#1a1a1e);box-shadow:0 0 0 5px #0008,0 4px 6px #000}
+@media(orientation:landscape){
+ #dev{--k:.8;grid-template-columns:minmax(150px,27%) 1fr minmax(150px,27%);grid-template-rows:auto 1fr;grid-template-areas:"tp tp tp" "pl bz pr"}
+ #scr{width:auto;height:100%;max-width:100%}#pl,#pr{justify-content:center;padding:0 0 24px}
+ #mid{bottom:8px}}
+@media(max-height:430px){#dev{--k:.66}}
+#rot{position:fixed;inset:0;z-index:98;background:#000e;display:none;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;padding:30px}#rot span{font-size:60px;animation:rt 2s ease-in-out infinite}#rot button{border:0;border-radius:14px;padding:12px 18px;font:600 14px system-ui;background:#6c5ce7;color:#fff}@keyframes rt{50%{transform:rotate(-90deg)}}@media(orientation:portrait){#rot{display:flex}}
+#msg{position:fixed;inset:0;z-index:99;background:#000d;display:flex;align-items:center;justify-content:center;text-align:center;padding:30px;line-height:1.6}
+#msg i{width:44px;height:44px;border:5px solid #333;border-top-color:#6c5ce7;border-radius:50%;animation:s 1s linear infinite}@keyframes s{to{transform:rotate(360deg)}}
+</style></head><body>
+<div id="dev">
+ <div id="tp"><button id="bk">‹ Меню</button><span id="lbl"></span><span style="width:70px"></span></div>
+ <div id="bz"><div id="scr"><div id="game"></div></div></div>
+ <div id="pl"></div><div id="pr"></div><div id="mid"></div>
+</div>
+<div id="msg"><i></i></div>
+<div id="rot"><span>📱</span><p>Для игры лучше повернуть телефон горизонтально</p><button onclick="this.parentNode.remove()">Всё равно играть так</button></div>
+<script>
+const $=id=>document.getElementById(id);
+const CORES={nes:'nes',snes:'snes',gb:'gb',gba:'gba',nds:'nds',n64:'n64',psx:'psx',psp:'psp',md:'segaMD',sms:'segaMS',gg:'segaGG',a26:'atari2600',pce:'pce',arc:'arcade'};
+const SS=[['SELECT',2],['START',3]];
+// кнопка: [подпись, retropad-индекс, цвет, колонка, строка, цвет символа]
+const SYMS=(bc,gl)=>[['△',9,bc,2,1,gl[0]],['□',1,bc,1,2,gl[1]],['○',8,bc,3,2,gl[2]],['✕',0,bc,2,3,gl[3]]];
+const G=['#35c9a0','#e87bb8','#f0524a','#5a90f0'];
+const SK={
+nes:{lbl:'RETRO · 8BIT',lc:'#c8102e',body:'linear-gradient(#d6d5ce,#a8a79e)',bz:'#26262c',dc:'#16161a',pc:'#c8102e',cs:60,cols:3,face:[['B',0,'#c8102e',1,2],['A',8,'#c8102e',3,2]],mid:SS,ar:'4/3',pad:'#111'},
+snes:{lbl:'RETRO · 16BIT',lc:'#6a5acd',body:'linear-gradient(#dcdce2,#b3b3bd)',bz:'#3a3a48',dc:'#4a4a58',pc:'#8c8c98',cs:54,cols:3,face:[['X',9,'#3a6fd8',2,1],['Y',1,'#3fb86f',1,2],['A',8,'#d8404f',3,2],['B',0,'#e8c43a',2,3]],shl:[['L',10]],shr:[['R',11]],mid:SS,ar:'4/3'},
+gb:{lbl:'DOT MATRIX',lc:'#2b3a8a',body:'linear-gradient(#cdcbbf,#adab9f)',bz:'#4c4c58',dc:'#222',pc:'#7a7a82',cs:62,cols:3,face:[['B',0,'#a8274a',1,3],['A',8,'#a8274a',3,2]],mid:SS,ar:'10/9',sf:'sepia(.35) hue-rotate(50deg) saturate(.9)'},
+gba:{lbl:'RETRO · ADVANCE',lc:'#e8e6ff',body:'linear-gradient(#6d5bc0,#43347f)',bz:'#16161e',dc:'#262636',pc:'#9a96c8',cs:58,cols:3,face:[['B',0,'#cfd0dc',2,3],['A',8,'#cfd0dc',3,2]],shl:[['L',10]],shr:[['R',11]],mid:SS,ar:'3/2'},
+nds:{lbl:'RETRO · DUAL',lc:'#555a68',body:'linear-gradient(#e8eaf0,#bcc0cb)',bz:'#1a1b22',dc:'#555a68',pc:'#9aa0ae',cs:50,cols:3,face:[['X',9,'#dfe2ea',2,1],['Y',1,'#dfe2ea',1,2],['A',8,'#dfe2ea',3,2],['B',0,'#dfe2ea',2,3]],shl:[['L',10]],shr:[['R',11]],mid:SS,ar:'4/5'},
+n64:{lbl:'RETRO · 64',lc:'#c9242b',body:'linear-gradient(#9d9da7,#6e6e79)',bz:'#202028',dc:'#2a2a30',pc:'#c9242b',cs:38,cols:5,face:[['B',1,'#2f9e44',1,2],['A',0,'#2f6fdc',2,3],['▲',9,'#e8c43a',4,1],['◀',8,'#e8c43a',3,2],['▶',14,'#e8c43a',5,2],['▼',15,'#e8c43a',4,3]],shl:[['Z',12],['L',10]],shr:[['R',11]],mid:[['START',3]],ar:'4/3'},
+psx:{lbl:'RETRO · PLAY',lc:'#2b2b36',body:'linear-gradient(#cacace,#9e9ea6)',bz:'#1a1a22',dc:'#8f8f98',pc:'#7c7c86',cs:54,cols:3,face:SYMS('#9c9ca4',G),shl:[['L2',12],['L1',10]],shr:[['R1',11],['R2',13]],mid:SS,ar:'4/3'},
+psp:{lbl:'RETRO · PORTABLE',lc:'#9aa3b5',body:'linear-gradient(#2b2d38,#08090d)',bz:'#000',dc:'#cfd2dc',pc:'#555966',cs:50,cols:3,face:SYMS('#1d1e26',G),shl:[['L',10]],shr:[['R',11]],mid:SS,ar:'16/9',nub:1},
+md:{lbl:'RETRO · MEGA',lc:'#d33',body:'linear-gradient(#2c2c32,#121216)',bz:'#08080a',dc:'#0c0c10',pc:'#444',cs:56,cols:3,face:[['A',1,'#3b3b44',1,2,'#ddd'],['B',0,'#3b3b44',2,2,'#ddd'],['C',8,'#3b3b44',3,2,'#ddd']],mid:[['START',3]],ar:'4/3'},
+sms:{lbl:'RETRO · MASTER',lc:'#fd79a8',body:'linear-gradient(#26262c,#101014)',bz:'#050507',dc:'#0a0a0e',pc:'#444',cs:62,cols:3,face:[['1',0,'#d02a2a',2,2],['2',8,'#d02a2a',3,2]],mid:[['START',3]],ar:'4/3'},
+gg:{lbl:'RETRO · GEAR',lc:'#4a69bd',body:'linear-gradient(#2b2e3c,#14151c)',bz:'#050507',dc:'#0c0c12',pc:'#555',cs:62,cols:3,face:[['1',0,'#3a3d4c',1,3,'#ddd'],['2',8,'#3a3d4c',3,2,'#ddd']],mid:[['START',3]],ar:'10/9'},
+a26:{lbl:'RETRO · 2600',lc:'#f6b93b',body:'repeating-linear-gradient(90deg,#6e4725 0 6px,#5f3c1e 6px 12px)',bz:'#111',dk:'stk',dc:'#111',pc:'#222',cs:96,cols:3,face:[['FIRE',0,'#c0272d',2,2]],mid:SS,ar:'4/3'},
+pce:{lbl:'RETRO · ENGINE',lc:'#d63',body:'linear-gradient(#f1f1ee,#c8c8c2)',bz:'#222',dc:'#222',pc:'#555',cs:58,cols:3,face:[['II',8,'#c83a3a',2,2],['I',0,'#c83a3a',3,2]],mid:[['SELECT',2],['RUN',3]],ar:'4/3'},
+arc:{lbl:'RETRO · ARCADE',lc:'#55efc4',body:'linear-gradient(#1d2040,#0a0b1a)',bz:'#05050a',dk:'stk',dc:'#111',pc:'#334',cs:58,cols:3,rows:2,face:[['1',0,'#e04458',1,1],['2',8,'#e6b83a',2,1],['3',10,'#35b374',3,1],['4',1,'#4a7fe0',1,2],['5',9,'#c56cf0',2,2],['6',11,'#f2f2f2',3,2]],mid:[['COIN',2],['START',3]],ar:'4/3'}};
+// --- ввод в эмулятор (индексы RetroPad)
+const held={};function press(i,on){if(!!held[i]===on)return;held[i]=on;try{EJS_emulator.gameManager.simulateInput(0,i,on?1:0)}catch(e){}if(on)navigator.vibrate?.(7)}
+function bind(el,idx){const dn=e=>{e.preventDefault();el.setPointerCapture?.(e.pointerId);el.classList.add('on');press(idx,true)},up=()=>{el.classList.remove('on');press(idx,false)};
+ el.addEventListener('pointerdown',dn);['pointerup','pointercancel'].forEach(v=>el.addEventListener(v,up))}
+function btn(cls,txt,idx,css){const b=document.createElement('button');b.className=cls;b.innerHTML=txt;if(css)b.style.cssText=css;bind(b,idx);return b}
+function dpad(sk){const d=document.createElement('div');let bl;
+ if(sk.dk=='stk'){d.className='dp stk';d.innerHTML='<div class="bl"></div>';bl=d.firstChild}
+ else{d.className='dp';d.innerHTML='<div class="h"></div><div class="v"></div><div class="c"></div><span class="a" style="top:4%;left:46%">▲</span><span class="a" style="bottom:4%;left:46%">▼</span><span class="a" style="left:5%;top:44%">◀</span><span class="a" style="right:5%;top:44%">▶</span>'}
+ const D=[4,5,6,7];const set=(x,y)=>{const v=[y<-.3,y>.3,x<-.3,x>.3];v.forEach((o,i)=>press(D[i],o));
+  if(bl)bl.style.transform=`translate(${x*55}%,${y*55}%)`;else d.style.transform=`perspective(220px) rotateX(${-y*10}deg) rotateY(${x*10}deg)`};
+ const mv=e=>{const r=d.getBoundingClientRect();set(Math.max(-1,Math.min(1,(e.clientX-r.left-r.width/2)/(r.width/2))),Math.max(-1,Math.min(1,(e.clientY-r.top-r.height/2)/(r.height/2))))};
+ d.addEventListener('pointerdown',e=>{e.preventDefault();d.setPointerCapture(e.pointerId);mv(e)});d.addEventListener('pointermove',e=>{if(e.buttons||e.pressure)mv(e)});
+ ['pointerup','pointercancel'].forEach(v=>d.addEventListener(v,()=>set(0,0)));return d}
+function skin(sys){const sk=SK[sys],dv=$('dev'),S=dv.style;
+ S.setProperty('--body',sk.body);S.setProperty('--bz',sk.bz);S.setProperty('--dc',sk.dc);S.setProperty('--pc',sk.pc);S.setProperty('--cs',sk.cs+'px');S.setProperty('--ar',sk.ar);if(sk.sf)$('scr').style.setProperty('--sf',sk.sf);
+ $('lbl').textContent=sk.lbl;$('lbl').style.color=sk.lc;
+ const sr=a=>{const r=document.createElement('div');r.className='sr';(a||[]).forEach(([l,i])=>r.appendChild(btn('sh',l,i)));return r};
+ const L=$('pl'),R=$('pr');L.append(sr(sk.shl),dpad(sk));if(sk.nub){const n=document.createElement('div');n.className='nub';L.append(n)}
+ const g=document.createElement('div');g.className='fg';const cs='calc(var(--cs)*var(--k))';g.style.gridTemplateColumns=`repeat(${sk.cols},${cs})`;g.style.gridTemplateRows=`repeat(${sk.rows||3},${cs})`;
+ sk.face.forEach(([l,i,c,x,y,gc])=>{const b=btn('fb'+(gc?' g':''),l,i,`--bc:${c};grid-column:${x};grid-row:${y};${gc?'--gc:'+gc:''}`);b.style.width=b.style.height=`calc(${cs}*.88)`;g.appendChild(b)});
+ R.append(sr(sk.shr),g);
+ sk.mid.forEach(([l,i])=>$('mid').appendChild(btn('pil',l,i)));
+ // сдвиг блоков по вертикали для компактных раскладок
+ if(sk.rows==2)g.style.marginTop='20px'}
+// --- загрузка
+const id=+new URLSearchParams(location.search).get('id');
+const r=indexedDB.open('retro36');
+const msg=t=>{$('msg').textContent=t};
+r.onerror=()=>msg('Не удалось открыть хранилище');
+r.onsuccess=()=>{const db=r.result;db.transaction('games').objectStore('games').get(id).onsuccess=e=>{const g=e.target.result;if(!g)return msg('Игра не найдена');
+ db.transaction('bios').objectStore('bios').get(g.sys).onsuccess=b=>start(g,b.target.result)}};
+async function coi(){
+ if(window.crossOriginIsolated)return true;
+ if(!('serviceWorker' in navigator)){msg('Для PSP нужен режим, который этот браузер не поддерживает. Попробуй Chrome или Edge.');return false}
+ if(sessionStorage.getItem('coi2')){msg('Для PSP нужны заголовки COOP/COEP, а этот браузер или хостинг их не даёт. Открой в Chrome/Edge или выложи сайт на Netlify/Cloudflare Pages (файл _headers уже в архиве). Остальные системы работают и так.');return false}
+ try{await navigator.serviceWorker.register('coi-serviceworker.js');await navigator.serviceWorker.ready;sessionStorage.setItem('coi2','1');location.reload()}catch(e){msg('Не удалось включить режим для PSP: '+e.message)}
+ return false}
+async function start(g,bios){
+ $('bk').onclick=()=>location.href='index.html#'+g.sys;skin(g.sys);
+ if(g.sys=='psp'&&!(await coi()))return;
+ if(g.sys=='psx'&&!bios)return msg('Для PS1 нужен BIOS. Вернись в меню → PlayStation → кнопка BIOS (например scph1001.bin).');
+ $('msg').remove();
+ window.EJS_player='#game';window.EJS_core=CORES[g.sys];window.EJS_gameName=g.name.replace(/\.[^.]+$/,'');
+ window.EJS_gameUrl=URL.createObjectURL(new File([g.blob],g.name));
+ if(bios)window.EJS_biosUrl=URL.createObjectURL(new File([bios],bios.name||'bios.bin'));
+ window.EJS_pathtodata='https://cdn.emulatorjs.org/stable/data/';window.EJS_startOnLoaded=true;window.EJS_language='ru';window.EJS_color='#6c5ce7';
+ const s=document.createElement('script');s.src='https://cdn.emulatorjs.org/stable/data/loader.js';document.body.appendChild(s)}
+</script></body></html>
